@@ -2,6 +2,10 @@
 
 {% block content %}
 <div class="jumbotron">
+	{% if not post.date_posted %}
+	<a href="{% url 'approved' post.id %}"><button>Publish</button></a>
+	{% else %}
+	{% endif %}
 	<h2>{{post.name}}</h2>
 	<h6>{{post.date_created}}</h6>
 	<b>{{post.text}}</b>
@@ -11,6 +15,10 @@
 	{% for comment in comments %}
 		<p>{{comment.author}}</p>
 		<p>{{comment.text}}</p>
+		{% if not comment.approved %}
+		<a href="{% url 'approved_comment' post.id comment.id%}"><button>Publish</button></a>
+		{% else %}
+		{% endif %}
 	{% endfor %}
 </div>
 {% endblock %}
