@@ -13,3 +13,15 @@ class Post(models.Model):
 
 	def __str__(self):
 		return self.name
+
+class Comment(models.Model):
+	post = models.ForeignKey('blog.Post',on_delete=models.CASCADE)
+	author = models.CharField(max_length=50)
+	text = models.TextField(blank=True)
+	date_created = models.DateTimeField(default=timezone.now)
+
+	def __str__(self):
+		return self.author
+
+	def get_url(self):
+		return reverse('description', args = [self.post_id])

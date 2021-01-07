@@ -8,5 +8,9 @@
 	<br>
 	<b>{{post.author}}</b>
 	<a href="{% url 'comment' post.id%}"><button>Comment</button></a>
+	{% for comment in comments %}
+		<p>{{comment.author}}</p>
+		<p>{{comment.text}}</p>
+	{% endfor %}
 </div>
 {% endblock %}
