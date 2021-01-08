@@ -1,12 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="jumbotron">
-	{% if not post.date_posted %}
-	<a href="{% url 'approved' post.id %}"><button>Publish</button></a>
-	{% else %}
-	{% endif %}
-	<h2>{{post.name}}</h2>
+	<!-- <h2>{{post.name}}</h2>
 	<h6>{{post.date_created}}</h6>
 	<b>{{post.text | safe}}</b>
 	<br>
@@ -14,15 +9,37 @@
 	<a href="{% url 'edit' post.id%}"><button><span class="material-icons">edit</span></button></a>
 	<a href="{% url 'delete' post.id%}"><button><span class="material-icons">clear</span></button></a>
 	<br>
-	<a href="{% url 'comment' post.id%}"><button>Comment</button></a>
-	{% for comment in comments %}
-		<p>{{comment.author}}</p>
-		<p>{{comment.text}}</p>
-		{% if not comment.approved %}
-		<a href="{% url 'approved_comment' post.id comment.id%}"><button>Publish</button></a>
-		<a href="{% url 'delete_comment' post.id comment.id%}"><button>Delete</button></a>
-		{% else %}
-		{% endif %}
-	{% endfor %}
-</div>
+	<a href="{% url 'comment' post.id%}"><button>Comment</button></a> -->
+    <div class="position-relative overflow-hidden text-center bg-secondary">
+    	<div class="col-md-7 p-lg-5 mx-auto my-5">
+    		{% if not post.date_posted %}
+			<a class="btn btn-secondary" role="button" href="{% url 'approved' post.id %}">Publish &raquo;</a>
+			{% else %}
+			{% endif %}
+			<br>
+      		<svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="white"/></svg>
+      		<br>
+      		<a class="btn btn-secondary" role="button" href="{% url 'edit' post.id%}"><span class="material-icons">edit</span></a>
+			<a class="btn btn-secondary" role="button" href="{% url 'delete' post.id%}"><span class="material-icons">clear</span></a>
+	        <h2>{{post.name}}</h2>
+	        <p>{{post.text | safe}}</p>
+	        <b><p>Date of post created: {{post.date_created}}</p></b>
+	        <em>Posted by: {{post.author}}</em>
+	        <hr>
+	        <div class="col-md-6">
+	        	<h4>Comments</h4>
+		    	{% for comment in comments %}
+		    	<hr class="bg-light">
+		    		{% if not comment.approved %}
+					<a class="btn btn-secondary" role="button" href="{% url 'approved_comment' post.id comment.id%}">Publish</a>
+					<a class="btn btn-secondary" role="button" href="{% url 'delete_comment' post.id comment.id%}">Delete</a>
+					{% else %}
+					{% endif %}
+					<b><p>Author:{{comment.author}}</p></b>
+					<p>Text: {{comment.text}}</p>
+					<em><p>Date of created comment: {{comment.date_created}}</p></em>
+				{% endfor %}
+			</div>
+    	</div>
+  	</div>
 {% endblock %}
