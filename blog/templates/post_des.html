@@ -8,15 +8,19 @@
 	{% endif %}
 	<h2>{{post.name}}</h2>
 	<h6>{{post.date_created}}</h6>
-	<b>{{post.text}}</b>
+	<b>{{post.text | safe}}</b>
 	<br>
 	<b>{{post.author}}</b>
+	<a href="{% url 'edit' post.id%}"><button><span class="material-icons">edit</span></button></a>
+	<a href="{% url 'delete' post.id%}"><button><span class="material-icons">clear</span></button></a>
+	<br>
 	<a href="{% url 'comment' post.id%}"><button>Comment</button></a>
 	{% for comment in comments %}
 		<p>{{comment.author}}</p>
 		<p>{{comment.text}}</p>
 		{% if not comment.approved %}
 		<a href="{% url 'approved_comment' post.id comment.id%}"><button>Publish</button></a>
+		<a href="{% url 'delete_comment' post.id comment.id%}"><button>Delete</button></a>
 		{% else %}
 		{% endif %}
 	{% endfor %}
